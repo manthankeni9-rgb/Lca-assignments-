@@ -1,2 +1,12 @@
-# Lca-assignments-
-5 lca assignments 
+a = int(input("Enter first integer: "))
+b = int(input("Enter second integer: "))
+c = int(input("Enter third integer: "))
+
+if a >= b and a >= c:
+    greatest = a
+elif b >= a and b >= c:
+    greatest = b
+else:
+    greatest = c
+
+print("The greatest number is:", greatest)
