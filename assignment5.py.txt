@@ -1,0 +1,129 @@
+numbers=[10,20,30,40,50]
+print("List", number)
+print("Number 1:", numbers[0])
+print("Number 2:", numbers[1])
+print("Number 3:", numbers[2])
+print("Number 4:", numbers[3])
+print("Number 5:", numbers[4])
+
+#
+numbers=[10,20,30,40,50]
+print("Original List:", numbers)
+numbers.append(60)
+print(numbers)
+
+#
+numbers.reverse()
+print("Reversed List", numbers)
+
+#
+
+numbers=[10,20,30,40,50]
+element= int(input("Enter the element to search"))
+count=numbers.count(element)
+print("Number of occurrences:", count)
+
+#
+list1= [10,20,30]
+list2=[40,50,60]
+list3= list1+ list2
+print("List 1:", list1)
+print("List 2:", list2)
+print("list1+list2:", list3)
+
+#insert element at specific position
+numbers=[10,20,30,40,50]
+print("Original List:", numbers)
+numbers.insert(1,15)
+print("Edited list:",numbers)
+
+#
+numbers=[10,20,30,40,50]
+index= int(input("Enter the index to remove:"))
+numbers.pop(index)
+print("list after removal:", numbers)
+
+#to accpect 20 numbers from user and save it:
+numbers=[]
+for i in range(20):
+    num=int(input("Enter value:"))
+    numbers.append(num)
+
+    print("\nlist:", numbers)
+
+#a.count similar elements and print thier index values 
+print("\nSimilar index and thier index values")
+for i in range(20):
+    if numbers.count(numbers[i])>1:
+        print(numbers[i], "->", end=" ")
+
+        for j in range(20):
+            if numbers[j]==numbers[i]:
+                print(j,end=" ")
+
+        print()
+
+#b.Count even and odd values
+even_count = 0
+odd_count = 0
+
+for num in numbers:
+    if num % 2 == 0:
+        even_count += 1
+    else:
+        odd_count += 1
+
+print("\nEven values:", even_count)
+print("Odd values:", odd_count)
+
+#To display positive and negative number
+positive_count = 0
+negative_count = 0
+zero_count = 0
+
+for num in numbers:
+    if num > 0:
+        positive_count += 1
+    elif num < 0:
+        negative_count += 1
+    else:
+        zero_count += 1
+
+print("\nPositive values:", positive_count)
+print("Negative values:", negative_count)
+print("Zero values:", zero_count)
+
+##accept 10 numbers from the user
+numbers=[]
+for i in range(10):
+    num=int(input("Enter value:"))
+    numbers.append(num)
+
+    print("\nlist:", numbers)
+
+#a. ascending order usimg sorted()
+ascending=sorted(numbers)
+print("Ascending Order:", ascending)
+
+#b. Decending Order using sort
+numbers.sort(reverse=True)
+print("Descending Order:", numbers)
+
+#c. Length of the list
+print("Length of List:", len(numbers))
+
+#### accept list 1 and list 2 and then merge
+list1=[]
+for i in range(3):
+    num=int(input("Enter value:"))
+    list1.append(num)
+
+list2=[]
+for i in range(3):
+    num=int(input("Enter value:"))
+    list2.append(num)
+
+merged=list1+ list2
+print("\nlist 1:", list1)
+print("\nlist 2:", list2) 
+print("\nMerged list:",merged)
