@@ -1,12 +1,35 @@
-a = int(input("Enter first integer: "))
-b = int(input("Enter second integer: "))
-c = int(input("Enter third integer: "))
+# List Operations
+lst = [10, 20, 30]
+print("Original List:", lst)
 
-if a >= b and a >= c:
-    greatest = a
-elif b >= a and b >= c:
-    greatest = b
-else:
-    greatest = c
+lst.append(40)
+print("After Append:", lst)
 
-print("The greatest number is:", greatest)
+lst.insert(1, 15)
+print("After Insert:", lst)
+
+lst.remove(20)
+print("After Remove:", lst)
+
+# Tuple Operations
+tup = (10, 20, 30, 20)
+print("\nTuple:", tup)
+print("Count of 20:", tup.count(20))
+print("Index of 30:", tup.index(30))
+print("Slice:", tup[1:3])
+
+# Dictionary Operations
+d = {"Name": "Manthan", "Age": 20}
+print("\nDictionary:", d)
+
+d["City"] = "Pune"
+print("After Adding:", d)
+
+d.update({"Age": 21})
+print("After Update:", d)
+
+d.pop("City")
+print("After Delete:", d)
+
+print("Keys:", d.keys())
+print("Values:", d.values())
