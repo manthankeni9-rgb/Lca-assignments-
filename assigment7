@@ -1,0 +1,96 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pathlib import Path
+file_name = input(
+"Enter CSV filename (e.g. sample_data_assignment_07.csv): "
+).strip()
+try:
+df = pd.read_csv(Path(file_name))
+required = {"Student", "Maths", "Python", "Attendance", "City"}
+missing = required - set(df.columns)
+if missing:
+raise ValueError("Missing required columns: " + ", ".join(sorted(missing)))
+for col in ["Maths", "Python", "Attendance"]:
+df[col] = pd.to_numeric(df[col], errors="coerce")
+df = df.dropna(subset=["Student", "Maths", "Python",
+"Attendance", "City"])
+if df.empty:
+raise ValueError("No complete rows are available to plot.")
+print("\nDataset:")
+print(df)
+# 1. Line plot: Python marks
+plt.figure(figsize=(8, 4.5))
+plt.plot(df["Student"], df["Python"], marker="o", label="Python")
+plt.title("Python Marks of Students")
+plt.xlabel("Student")
+plt.ylabel("Python Marks")
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
+# 2. Bar plot: Maths marks
+plt.figure(figsize=(8, 4.5))
+plt.bar(df["Student"], df["Maths"], label="Maths")
+plt.title("Maths Marks of Students")
+plt.xlabel("Student")
+plt.ylabel("Maths Marks")
+plt.legend()
+plt.tight_layout()
+plt.show()
+# 3. Scatter plot: Maths vs Python
+plt.figure(figsize=(7, 4.5))
+plt.scatter(df["Maths"], df["Python"], s=70, label="Students")
+plt.title("Maths vs Python Marks")
+plt.xlabel("Maths Marks")
+plt.ylabel("Python Marks")
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
+# 4. Correlation matrix and heatmap
+correlation = df[["Maths", "Python", "Attendance"]].corr()
+print("\nCorrelation matrix:")
+print(correlation)
+plt.figure(figsize=(6.5, 5))
+sns.heatmap(correlation, annot=True, cmap="Blues",
+vmin=-1, vmax=1, fmt=".2f")
+plt.title("Correlation Heatmap")
+plt.tight_layout()
+plt.show()
+# Extension 1: Histogram of Python marks
+plt.figure(figsize=(7, 4.5))
+plt.hist(df["Python"], bins=5, edgecolor="black", label="Python")
+plt.title("Distribution of Python Marks")
+plt.xlabel("Python Marks")
+plt.ylabel("Number of Students")
+plt.legend()
+plt.tight_layout()
+plt.show()
+# Extension 2: Box plot for Maths and Python
+plt.figure(figsize=(7, 4.5))
+plt.boxplot([df["Maths"], df["Python"]],
+tick_labels=["Maths", "Python"])
+plt.title("Maths and Python Marks: Box Plot")
+plt.ylabel("Marks")
+plt.tight_layout()
+plt.show()
+# Extension 3: Pie chart showing students by city
+city_counts = df["City"].value_counts()
+plt.figure(figsize=(6, 6))
+plt.pie(city_counts, labels=city_counts.index,
+Python Programming Laboratory — Solved Assignments 06 & 07 Page 7
+autopct="%1.1f%%", startangle=90)
+plt.title("Students by City")
+plt.tight_layout()
+plt.show()
+# Extension 4: Average values
+print("\nAverage Maths marks:", round(df["Maths"].mean(), 2))
+print("Average Python marks:", round(df["Python"].mean(), 2))
+print("Average Attendance:", round(df["Attendance"].mean(), 2))
+except FileNotFoundError:
+print("Error: CSV file not found. Check the filename and folder.")
+except ValueError as error:
+print("Input/data error:", error)
+except Exception as error:
+print("Could not process the dataset:", error)
