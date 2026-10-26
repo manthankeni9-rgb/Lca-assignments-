@@ -1,0 +1,52 @@
+import pandas as pd
+from pathlib import Path
+file_path = input("Enter CSV/Excel file path: ").strip()
+path = Path(file_path)
+try:
+if path.suffix.lower() == ".csv":
+df = pd.read_csv(path)
+elif path.suffix.lower() in [".xls", ".xlsx"]:
+df = pd.read_excel(path)
+else:
+raise ValueError("Use a .csv, .xls or .xlsx file.")
+print("\nFirst five rows:")
+print(df.head())
+print("\nDataset information:")
+df.info()
+print("\nSummary statistics:")
+print(df.describe(include="all"))
+# Treat blank text cells as missing values.
+df = df.replace(r"^\s*$", pd.NA, regex=True)
+print("\nMissing values before cleaning:")
+print(df.isnull().sum())
+# Fill numeric columns with their median.
+numeric_cols = df.select_dtypes(include="number").columns
+for col in numeric_cols:
+df[col] = df[col].fillna(df[col].median())
+# Fill text columns with their mode, if a mode exists.
+text_cols = df.select_dtypes(include=["object", "string"]).columns
+for col in text_cols:
+modes = df[col].mode(dropna=True)
+if not modes.empty:
+df[col] = df[col].fillna(modes.iloc[0])
+# Remove duplicate records.
+df = df.drop_duplicates()
+# Drop an irrelevant column only if it exists.
+if "Remarks" in df.columns:
+df = df.drop(columns=["Remarks"])
+print("\nCleaned dataset:")
+print(df)
+# Example filtering with loc[]; change the condition as needed.
+if "Marks" in df.columns:
+selected = df.loc[df["Marks"] >= 70]
+print("\nStudents with Marks >= 70:")
+print(selected)
+output_path = path.with_name(path.stem + "_cleaned.csv")
+df.to_csv(output_path, index=False)
+print(f"\nCleaned data saved to: {output_path}")
+except FileNotFoundError:
+print("Error: file not found. Check the file path.")
+except ValueError as error:
+print("Input error:", error)
+except Exception as error:
+print("Could not process the file:", error)
